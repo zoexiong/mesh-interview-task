@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var url = require('url');
-const querystring = require('querystring');
+var querystring = require('querystring');
 var axios = require('axios');
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
@@ -35,7 +35,8 @@ function getCommits(repoArray, cb){
 function getPayload(req, res, next) {
     var payload = {};
     //results returned by github api are paginated and the default is 30 per page, we can set it to up to 100 per page
-    reposPath = '/user/repos' + '?' + querystring.stringify({per_page: '10'});
+    // set it to 100 might makes you reach the api limit very quickly and thus got 403 error, so I set it to 50
+    reposPath = '/user/repos' + '?' + querystring.stringify({per_page: '50'});
 
     axios.all([axios.get('/user'), axios.get(reposPath)])
         .then(axios.spread(
@@ -50,13 +51,14 @@ function getPayload(req, res, next) {
                     email: userInfo.email,
                     followerCount: userInfo.followers
                 };
-                //repo infop
+                //repo info
                 console.log('get repo statusCode:', res2.status);
                 const rawRepoArray = res2.data;
                 repoArray = rawRepoArray.map(function(repo){return {'name': repo['name'], 'url': repo.html_url}});
                 //get commits
                 getCommits(repoArray, function(payloadRepos){
                     payload.repositories = payloadRepos;
+                    //payload = JSON.stringify(payload, null, 2); 
                     res.json(payload)
                 });
             }))
