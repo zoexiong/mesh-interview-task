@@ -6,7 +6,7 @@ var app = app || {};
     repos.all = [];
     repos.requestRepos = function (callback) {
 
-        $.get('github/user/repos')
+        $.get('github/users/GavinThomas1192')
             .then(
             data => {
                 console.log('THIS IS DATA', data);
