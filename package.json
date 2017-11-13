@@ -1,0 +1,25 @@
+{
+  "name": "mesh-interview-task",
+  "version": "1.0.0",
+  "description": "Package Json for Mesh",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavinThomas1192/mesh-interview-task.git"
+  },
+  "author": "Gavin Thomas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GavinThomas1192/mesh-interview-task/issues"
+  },
+  "homepage": "https://github.com/GavinThomas1192/mesh-interview-task#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-request-proxy": "^2.0.0"
+  }
+}
