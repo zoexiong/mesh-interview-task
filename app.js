@@ -3,6 +3,8 @@
 //Need to modularize
 //Need to call requestRepos
 //Need to display info
+//Need to test
+//OAUTH
 var app = app || {};
 
 (function (module) {
