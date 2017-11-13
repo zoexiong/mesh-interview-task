@@ -10,17 +10,44 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
 
+    <script id="repo-template" type="text/x-handlebars-template">
+            <li>
+              <a href="{{html_url}}" target="_blank">
+                <h3>{{name}}</h3>
+              </a>
+              <p>Description: {{description}}</p>
+              <p>Language: {{language}}</p>
+              <p>Created: {{created_at}}</p>
+              <p>Last updated: {{updated_at}}</p>
+              {{#if watchers_count}}
+              <p>{{watchers_count}} watching this repo</p>
+              {{/if}}
+            </li>
+          </script>
+
 </head>
 
 <body>
     <h1>Mesh-Interview-Github-Payload</h1>
 
-    <div>
-        <button id='button'>Get all my Repos!</button>
-        <ul id='payload'>
-            <li>Empty</li>
+    <section id="githubInfo">
+
+        <ul>
+            <li></li>
         </ul>
-    </div>
+    </section>
+
+
+    <!-- **********Scripts********** -->
+    <script src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+    <script src="/controllers/getRepoController.js"></script>
+    <script src="/view/repoView.js"></script>
+    <script src="/modules/repos.js"></script>
+
+
+
 </body>
 
 </html>
