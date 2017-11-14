@@ -4,6 +4,7 @@ var app = app || {};
     const repos = {};
 
     repos.all = [];
+    repos.test = 'helloworld'
     repos.requestUser = function (callback) {
 
         $.get('github/user')
@@ -29,7 +30,6 @@ var app = app || {};
             .then(
             data => {
                 data.map(ele => {
-                    console.log('$%%%%%', data)
                     payload.user.repositories.push({
                         name: ele.name,
                         url: ele.html_url,
@@ -42,6 +42,18 @@ var app = app || {};
                 console.log('THIS IS MESH PAYLOAD', payload)
                 repos.all = data, err => console.error(err)
                     .then()
+                callback();
+            }
+            )
+    };
+
+    repos.requestPayload = function (callback) {
+
+        $.get('/githubPayload')
+            .then(
+            data => {
+                console.log('GITHUBPAYLOAD', data)
+                // .then()
                 callback();
             }
             )
