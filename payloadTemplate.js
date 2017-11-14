@@ -1,4 +1,4 @@
-let payload = {
+const payload = {
     user: {
         githubHandle: '',
         githubURL: '',

@@ -3,10 +3,7 @@ var app = app || {};
 (function (module) {
     const repos = {};
 
-    repos.all = [];
-    repos.test = 'helloworld'
     repos.requestUser = function (callback) {
-
         $.get('github/user')
             .then(
             data => {
@@ -15,51 +12,54 @@ var app = app || {};
                 payload.user.followerCount = data.followers
                 payload.user.githubHandle = data.login
                 payload.user.avatarURL = data.avatar_url
-                console.log('THIS IS USER DATA', data, payload);
                 repos.all = data, err => console.error(err)
                     .then()
-                callback();
             }
             )
-    };
-
-
-
-    repos.requestRepos = function (callback) {
-        $.get('github/user/repos')
             .then(
-            data => {
-                data.map(ele => {
-                    payload.user.repositories.push({
-                        name: ele.name,
-                        url: ele.html_url,
-                        commitCount: ele.commits_url
+            $.get('github/user/repos')
+                .then(
+                resultData => {
+                    resultData.map(ele => {
+                        payload.user.repositories.push({
+                            name: ele.name,
+                            url: ele.html_url,
+                            commitCount: ele.commits_url
+                        })
+                    })
+                    $.ajax({
+                        type: "GET",
+                        url: '/githubPayload',
+                        data: payload,
+                        cache: false
 
                     })
-                })
+                        .then(
+                        payloadData => {
+                            return payloadData
+                        }
 
-                console.log('THIS IS REPO DATA', data);
-                console.log('THIS IS MESH PAYLOAD', payload)
-                repos.all = data, err => console.error(err)
-                    .then()
-                callback();
-            }
-            )
+                        )
+                }
+                )
+                .then())
     };
+
+
 
     repos.requestPayload = function (callback) {
 
-        $.get('/githubPayload')
+        $.get(`/githubPayload`)
             .then(
-            data => {
-                console.log('GITHUBPAYLOAD', data)
-                // .then()
-                callback();
+            response => {
+                repos.requestUser();
+
             }
             )
     };
-    repos.with = attr => repos.all.filter(repo => repo[attr]);
 
     module.repos = repos;
 })(app);
+
+
 
