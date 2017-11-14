@@ -7,6 +7,7 @@ var app = app || {};
     getReposController.init = function () {
 
         app.repos.requestRepos(app.repoView.index);
+        app.repos.requestUser(app.repoView.index);
     }
 
     module.getReposController = getReposController;
