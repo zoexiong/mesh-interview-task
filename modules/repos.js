@@ -4,14 +4,44 @@ var app = app || {};
     const repos = {};
 
     repos.all = [];
-    repos.requestRepos = function (callback) {
+    repos.requestUser = function (callback) {
 
-        $.get('github/users/GavinThomas1192')
+        $.get('github/user')
             .then(
             data => {
-                console.log('THIS IS DATA', data);
+                payload.user.email = data.email
+                payload.user.githubURL = data.html_url
+                payload.user.followerCount = data.followers
+                payload.user.githubHandle = data.login
+                payload.user.avatarURL = data.avatar_url
+                console.log('THIS IS USER DATA', data, payload);
                 repos.all = data, err => console.error(err)
-                    .then
+                    .then()
+                callback();
+            }
+            )
+    };
+
+
+
+    repos.requestRepos = function (callback) {
+        $.get('github/user/repos')
+            .then(
+            data => {
+                data.map(ele => {
+                    console.log('$%%%%%', data)
+                    payload.user.repositories.push({
+                        name: ele.name,
+                        url: ele.html_url,
+                        commitCount: ele.commits_url
+
+                    })
+                })
+
+                console.log('THIS IS REPO DATA', data);
+                console.log('THIS IS MESH PAYLOAD', payload)
+                repos.all = data, err => console.error(err)
+                    .then()
                 callback();
             }
             )
@@ -20,3 +50,4 @@ var app = app || {};
 
     module.repos = repos;
 })(app);
+
