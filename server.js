@@ -1,11 +1,13 @@
 'use-strict';
 require('dotenv').config()
+require('babel-register');
+require('./modules/repos.js');
+
 let express = require('express');
 let app = express();
 const requestProxy = require('express-request-proxy');
 const bodyParser = require('body-parser').urlencoded({ extended: true });
 const PORT = process.env.PORT || 3001
-
 
 app.use(express.static('.'))
 
@@ -17,7 +19,6 @@ function proxyGithub(request, response) {
     }))(request, response);
 
 }
-
 app.get('/github/*', proxyGithub);
 
 app.get('/', (req, res) => {
@@ -25,14 +26,11 @@ app.get('/', (req, res) => {
 })
 
 
-
 app.get('/githubPayload', (req, res) => {
+
     console.log('Routing Github request for githubPayload');
-    res.sendFile('./payloadTemplate.js', { root: './' });
+    res.send(req.query)
 })
-
-
-
 
 app.listen(PORT, function () {
     console.log(`Listening on port: "${PORT}"`)

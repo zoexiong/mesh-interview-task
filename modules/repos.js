@@ -3,8 +3,6 @@ var app = app || {};
 (function (module) {
     const repos = {};
 
-    repos.all = [];
-
     repos.requestUser = function (callback) {
         $.get('github/user')
             .then(
@@ -14,10 +12,8 @@ var app = app || {};
                 payload.user.followerCount = data.followers
                 payload.user.githubHandle = data.login
                 payload.user.avatarURL = data.avatar_url
-                console.log('THIS IS USER DATA', data, payload);
                 repos.all = data, err => console.error(err)
                     .then()
-                callback();
             }
             )
             .then(
@@ -31,39 +27,39 @@ var app = app || {};
                             commitCount: ele.commits_url
                         })
                     })
-                        .then()
-                    callback()
-                }
+                    $.ajax({
+                        type: "GET",
+                        url: '/githubPayload',
+                        data: payload,
+                        cache: false
 
-                ))
-            .then(
-            $.get('/githubPayload')
-                .then(
-                payloadData => {
-                    console.log(payloadData)
-                        .then()
-                    callback()
-                }
+                    })
+                        .then(
+                        payloadData => {
+                            return payloadData
+                        }
 
+                        )
+                }
                 )
-            )
+                .then())
     };
 
 
 
     repos.requestPayload = function (callback) {
 
-        $.get('/githubPayload')
+        $.get(`/githubPayload`)
             .then(
-            data => {
-                console.log('GITHUBPAYLOAD', data)
-                // .then()
-                callback();
+            response => {
+                repos.requestUser();
+
             }
             )
     };
-    repos.with = attr => repos.all.filter(repo => repo[attr]);
 
     module.repos = repos;
 })(app);
+
+
 
