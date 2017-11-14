@@ -4,9 +4,8 @@ var app = app || {};
     const repos = {};
 
     repos.all = [];
-    repos.test = 'helloworld'
-    repos.requestUser = function (callback) {
 
+    repos.requestUser = function (callback) {
         $.get('github/user')
             .then(
             data => {
@@ -21,31 +20,36 @@ var app = app || {};
                 callback();
             }
             )
-    };
-
-
-
-    repos.requestRepos = function (callback) {
-        $.get('github/user/repos')
             .then(
-            data => {
-                data.map(ele => {
-                    payload.user.repositories.push({
-                        name: ele.name,
-                        url: ele.html_url,
-                        commitCount: ele.commits_url
-
+            $.get('github/user/repos')
+                .then(
+                resultData => {
+                    resultData.map(ele => {
+                        payload.user.repositories.push({
+                            name: ele.name,
+                            url: ele.html_url,
+                            commitCount: ele.commits_url
+                        })
                     })
-                })
+                        .then()
+                    callback()
+                }
 
-                console.log('THIS IS REPO DATA', data);
-                console.log('THIS IS MESH PAYLOAD', payload)
-                repos.all = data, err => console.error(err)
-                    .then()
-                callback();
-            }
+                ))
+            .then(
+            $.get('/githubPayload')
+                .then(
+                payloadData => {
+                    console.log(payloadData)
+                        .then()
+                    callback()
+                }
+
+                )
             )
     };
+
+
 
     repos.requestPayload = function (callback) {
 

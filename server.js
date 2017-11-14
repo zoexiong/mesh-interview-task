@@ -1,6 +1,5 @@
 'use-strict';
 require('dotenv').config()
-let payloadFile = require('./payloadTemplate')
 let express = require('express');
 let app = express();
 const requestProxy = require('express-request-proxy');
@@ -25,10 +24,15 @@ app.get('/', (req, res) => {
     res.sendFile('./index.html', { root: './' })
 })
 
+
+
 app.get('/githubPayload', (req, res) => {
     console.log('Routing Github request for githubPayload');
-    res.render("index", payloadFile.payload);
+    res.sendFile('./payloadTemplate.js', { root: './' });
 })
+
+
+
 
 app.listen(PORT, function () {
     console.log(`Listening on port: "${PORT}"`)
