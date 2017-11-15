@@ -4,54 +4,25 @@ The Mesh interview task is to write a simple HTTP server that is integrated with
 
 https://developer.github.com/
 
-### Implementation
+## Installation
 
-The server should expose a single API that returns a user payload containing information about your personal GitHub account. The payload should look like the following:
+* Simply Fork and clone this repository
+* Navigate to the folder in your terminal
+* $ npm i
+* $ npm run start
 
-```
-GET /githubPayload
+* Your local server should be up and running simply click the button at http://localhost:3001 and check the developer console.
+* This app requires you to have a .env file with your specific Github token
 
-{
-  user: {
-    githubHandle:
-    githubURL:
-    avatarURL:
-    email:
-    followerCount:
-    repositories: [
-      {
-        name:
-        url:
-        commitCount:
-        pullRequestCount:
-      },
-      {...}
-    ]
-  }
-}
-```
 
-### Considerations
 
- * The server should not contain any hard coded information. Rather, all payload information should come directly from GitHub's API. It is up to determine you how the integration will be built and the GitHub data will be processed.
- * Please be sure to strip out any personal information from your payload.
+#### Example .env file
+* Your .env should look like this
+  * GITHUB_TOKEN = 'yourxxxsecretxxxtoken'
 
-### Quality
 
-We would like you to treat this task as if you were doing it for a client - i.e. use the best practices that you would like to see in a piece of work for others. Keep in mind code formatting, project organization, documentation etc.
+#### Future considerations
 
-### Project Submission
+* I would like to create a front facing site to display the github payload data. 
 
-Please fork this repository into your personal account. When your work is ready for review, please send us a link.
 
-### Time Expectation
-
-This task should not take you more than ~4 hours.
-
-### Submission
-
-Once you would like to submit, please send a pull request with your changes. Email the Mesh team member you have been interfacing with to let them know your project is ready for review.
-
-### Help
-
-Please feel free to ping us with any questions you might have as you get going. Otherwise we are excited to see what you build!
