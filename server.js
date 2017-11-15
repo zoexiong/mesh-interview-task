@@ -4,7 +4,7 @@ require('babel-register');
 require('./modules/repos.js');
 
 let express = require('express');
-let app = express();
+const app = require('./serverSetup')
 const requestProxy = require('express-request-proxy');
 const bodyParser = require('body-parser').urlencoded({ extended: true });
 const PORT = process.env.PORT || 3001
@@ -35,3 +35,6 @@ app.get('/githubPayload', (req, res) => {
 app.listen(PORT, function () {
     console.log(`Listening on port: "${PORT}"`)
 })
+
+
+module.exports = (app);
