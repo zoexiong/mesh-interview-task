@@ -22,7 +22,7 @@ https://developer.github.com/
 
 
 #### Future considerations
-
+* On Login Github OAuth would trigger the storing of token information making live app dynamic and prompting removal of .env files.
 * I would like to create a front facing site to display the github payload data. 
 
 
